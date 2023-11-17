@@ -4,7 +4,6 @@ def check(x):
             return False
     return True
 
-
 def DFS(x):
     global result
     if x == N:
@@ -14,7 +13,6 @@ def DFS(x):
             row[x] = i
             if check(x):
                 DFS(x + 1)
-
 
 N = int(input())
 row = [0] * N
