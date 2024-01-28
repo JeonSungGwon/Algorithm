@@ -1,55 +1,48 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class Main {
-	static String[] spS;
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String str = br.readLine();
-		String[] strArr = str.split(" ");
 		StringBuilder sb = new StringBuilder();
+		Deque<Character> dq =new ArrayDeque<Character>();
 		String rS = "";
-		String s = "";
 		boolean b = false;
 		for(int i = 0 ; i<str.length() ; i++) {
 			//System.out.println(rS);
 			if(str.charAt(i) == '<') {
 				b = true;
-				if(s != "") {
-					StringBuffer ssb = new StringBuffer(s);
-			        sb.append(ssb.reverse().toString());
-			        s = "";
-				}
+				while(!dq.isEmpty()) sb.append(dq.removeFirst());
 				
 			}
 			if(b) {
-				rS += str.charAt(i);
+				dq.addFirst(str.charAt(i));
+				//rS += str.charAt(i);
 				if(str.charAt(i) == '>') {
 					b = false;
-					sb.append(rS);
-					rS = "";
+					while(!dq.isEmpty()) sb.append(dq.removeLast());
 				}
 			} else{
 				if(str.charAt(i) == ' ') {
-					StringBuffer ssb = new StringBuffer(s);
-			        sb.append(ssb.reverse().toString());
+					while(!dq.isEmpty()) sb.append(dq.removeFirst());
 					sb.append(" ");
-					s = "";
 				}
 				else {
-					s += str.charAt(i);
+					dq.addFirst(str.charAt(i));
+					//s += str.charAt(i);
 				}
 				
 			}
 			
 		}
-		
-		if(s != "") {
-			StringBuffer ssb = new StringBuffer(s);
-			sb.append(ssb.reverse().toString());
-		}
+
+		while(!dq.isEmpty()) sb.append(dq.removeFirst());
+
 		System.out.println(sb);
 		
 	
