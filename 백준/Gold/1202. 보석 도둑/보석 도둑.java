@@ -28,7 +28,9 @@ public class Main {
 		for(int i = 0 ; i < K ; i++) {
 			arrB[i] = Integer.parseInt(br.readLine());
 		}
-		Arrays.sort(arr, (a, b) -> Integer.compare(a[0], b[0]));
+		Arrays.sort(arr, (a, b) -> {
+			return a[0] - b[0];
+		});
 		Arrays.sort(arrB);
 	    int idx = 0;
 	    long result = 0;
