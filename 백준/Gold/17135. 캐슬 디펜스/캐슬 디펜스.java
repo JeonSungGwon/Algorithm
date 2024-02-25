@@ -37,13 +37,13 @@ public class Main {
 			}
 		}
 		
-		permutations(0, 0);
+		combinations(0, 0);
 		System.out.println(result);
 		
 	}
 	static int result = 0;
 	static int[][] copyArr;
-    public static void permutations(int index, int cnt) {
+    public static void combinations(int index, int cnt) {
     	if(index >= M+1) return;
     	if(cnt > 3) return;
         if (cnt == 3) {
@@ -58,13 +58,6 @@ public class Main {
             			BFS(N, i, 0);
             		}
         		}
-//        		for(int i = 0 ; i < N ; i++) {
-//        			for(int j = 0 ; j < M ; j++) {
-//        				System.out.print(copyArr[i][j] + " ");
-//        			}
-//        			System.out.println();
-//        		}
-//        		System.out.println();
         		
         		for(int i = N-1 ; i > 0 ; i--) {
         			for(int j = 0 ; j < M ; j++) {
@@ -85,10 +78,10 @@ public class Main {
             return;
         }
         arr[N][index] = 2; 
-        permutations(index + 1, cnt+1);
+        combinations(index + 1, cnt+1);
         
         arr[N][index] = 0;
-        permutations(index + 1, cnt);
+        combinations(index + 1, cnt);
 
         
     }
