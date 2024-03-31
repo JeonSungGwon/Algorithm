@@ -1,60 +1,72 @@
-import java.util.*;
 import java.io.*;
-/**
- * https://www.acmicpc.net/problem/1786
- * BOJ 백준온라인져지 1786 찾기 풀이
- */
+import java.util.ArrayList;
+
 public class Main {
-    private static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    private static int pi[];
-    private static int N,M;
-    private static String str,pattern;
-    static{
-        try{
-            str = br.readLine();
-            pattern = br.readLine();
-        }catch(Exception e){
-            
-        }
-    }
-    public static void main(String args[]) {
-        initPi(pattern);
-        LinkedList<Integer> list = KMP(pattern);
-        System.out.println(list.size());
-        for(int temp : list){
-            System.out.println(temp);
-        }
-    }
-    private static void initPi(String str){
-        char[] temp = str.toCharArray();
-        pi = new int[temp.length];
+
+    static int[] getPi(String p){
+        int m = p.length();
         int j = 0;
-        for(int i = 1; i<temp.length; i++){
-            while (j > 0 && temp[i] != temp[j]) {
+
+        int[] pi = new int[m];
+
+        for(int i = 1; i < m; i++){
+            while(j > 0 && p.charAt(i) != p.charAt(j)){
                 j = pi[j-1];
             }
-            if(temp[i] == temp[j]){
+            if(p.charAt(i) == p.charAt(j)){
                 pi[i] = ++j;
             }
         }
+
+        return pi;
     }
-    private static LinkedList<Integer> KMP(String s){
-        LinkedList<Integer> list = new LinkedList<>();
-        int cnt = 0, j = 0;
-        char A[] = str.toCharArray(), B[] = s.toCharArray();
-        for(int i = 0, length = str.length(); i<length; i++){
-            while (j > 0 && A[i] != B[j]){
+
+    static ArrayList<Integer> kmp (String s, String p){
+        ArrayList<Integer> answer = new ArrayList<>();
+
+        int[] pi = getPi(p);
+
+        int n = s.length();
+        int m = p.length();
+        int j = 0;
+
+        for(int i = 0; i < n; i++){
+            while(j > 0 && s.charAt(i) != p.charAt(j)){
                 j = pi[j-1];
             }
-            if (A[i] == B[j]){
-                if (j == B.length-1){
+            if(s.charAt(i) == p.charAt(j)){
+                if(j==m-1){
+                    answer.add(i-m+1);
                     j = pi[j];
-                    list.add(i-B.length+2);
-                }else{
+                } else{
                     j++;
                 }
             }
         }
-        return list;
+
+        return answer;
     }
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+
+        String T = br.readLine();
+        String P = br.readLine();
+
+        ArrayList<Integer> matched = kmp(T,P);
+
+        bw.write(matched.size() + "\n");
+
+        for(int i = 0, size = matched.size(); i < size; i++){
+            bw.write((matched.get(i)+1)+" ");
+        }
+
+        bw.flush();
+        bw.close();
+        br.close();
+
+    }
+
+
 }
