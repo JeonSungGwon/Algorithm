@@ -1,90 +1,115 @@
-
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Solution {
-	static int[][] matrix;
-	static int[] endArr;
-	static int[] startArr;
-	static boolean[][] visited;
-	static int N;
-	static int dx[] = {1,0,-1,0};
-	static int dy[] = {0,1,0,-1};
-	static int minTime = 10000;
-    public static void main(String[] args) throws Exception {
-    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    	int T = Integer.parseInt(br.readLine());
-    	for(int tc = 1 ; tc<=T ; tc++) {
-	    	N = Integer.parseInt(br.readLine());
-	    	visited = new boolean[N][N];
-	    	matrix = new int[N][N];
-	    	minTime = 10000;
-	    	for(int x = 0 ; x<N ; x++) {
-	    		StringTokenizer st = new StringTokenizer(br.readLine());
-	    		for(int y = 0 ; y<N ; y++) {
-	    			matrix[x][y] = Integer.parseInt(st.nextToken());
-	    		}
-	    	}
-	    	StringTokenizer st = new StringTokenizer(br.readLine());
-	    	startArr = new int[2];
-	    	startArr[0] = Integer.parseInt(st.nextToken());
-	    	startArr[1] = Integer.parseInt(st.nextToken());
-	    	endArr = new int[2];
-	    	st = new StringTokenizer(br.readLine());
-	    	endArr[0] = Integer.parseInt(st.nextToken());
-	    	endArr[1] = Integer.parseInt(st.nextToken());
-	    	
-	    	BFS();
-	    	
-	    	if(minTime == 10000) {
-	    		System.out.println("#"+tc+" "+"-1");
-	    	}
-	    	else {
-	    		System.out.println("#"+tc+" "+minTime);
-	    	}
-    	}
-    }
 
-	private static void BFS(){
-		// TODO Auto-generated method stub
-		Queue<int[]> q = new LinkedList<>();
-		q.offer(new int[] {startArr[0], startArr[1], 0});
-		
-		while(!q.isEmpty()) {
-			int[] arr = q.poll();
-			int nowX = arr[0];
-			int nowY = arr[1];
-			int time = arr[2];
-			visited[nowX][nowY] = true;
-			
-			if(nowX == endArr[0] && nowY == endArr[1]) {
-				minTime = Math.min(minTime, time);
-				continue;
-			}
-			for(int i = 0 ; i<4; i++) {
-				int nx = nowX + dx[i];
-				int ny = nowY + dy[i];
-				if(nx>=0 && ny>=0 && nx<N && ny<N && matrix[nx][ny] != 1 && !visited[nx][ny]) {
-					if(matrix[nx][ny] == 2) {      
-						if((time + 1) % 3 == 0) {
-							q.offer(new int[] {nx,ny,time+1});
-						}
-						else if((time + 1) % 3 == 1) {
-							q.offer(new int[] {nx,ny,time+3});
-						}
-						else if((time + 1) % 3 == 2) {
-							q.offer(new int[] {nx,ny,time+2});
-						}
-					}
-					else {
-						q.offer(new int[] {nx,ny,time+1});
-					}
-				}
-			}
-		}
-	}
+
+    static int N;
+    static boolean[][] visit;
+    static int[][] arr;
+    static int cnt;
+    static int start_x, start_y, end_x, end_y;
+    static int[] dy = {-1,0,1,0};
+    static int[] dx = {0,-1,0,1};
+
+
+    public static void main(String[] args) throws IOException {
+
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer stf = new StringTokenizer(br.readLine());
+        int T = Integer.parseInt(stf.nextToken());
+//        int T = 10;
+        for(int test_case = 1; test_case <= T; test_case++)
+        {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            N = Integer.parseInt(st.nextToken());
+
+
+            arr = new int[N][N];
+            visit = new boolean[N][N];
+
+            cnt = N*N;
+
+            for (int i = 0; i < N; i++) {
+                StringTokenizer st2 = new StringTokenizer(br.readLine());
+                for (int j = 0; j < N; j++) {
+                    arr[i][j] = Integer.parseInt(st2.nextToken());
+                }
+            }
+
+            StringTokenizer start = new StringTokenizer(br.readLine());
+            start_y = Integer.parseInt(start.nextToken());
+            start_x = Integer.parseInt(start.nextToken());
+            StringTokenizer end = new StringTokenizer(br.readLine());
+            end_y = Integer.parseInt(end.nextToken());
+            end_x = Integer.parseInt(end.nextToken());
+
+//            visit[start_y][start_x] = true;
+//            dfs(start_y, start_x, 0);
+
+
+            int time = N*N;
+            Queue<int[]> queue = new LinkedList<>();
+            queue.add(new int[]{start_y, start_x, 0});
+
+            while (!queue.isEmpty()){
+                int[] po = queue.poll();
+                int y = po[0]; int x = po[1]; int t = po[2];
+                visit[y][x] = true;
+
+                if(y==end_y && x==end_x){
+                    time = t; break;
+                }
+
+                for (int d = 0; d < 4; d++) {
+                    int py = y+dy[d];
+                    int px = x+dx[d];
+
+
+                    if(py<0||py>=N||px<0||px>=N) continue;
+                    if(!visit[py][px]){
+
+                        if(arr[py][px]==1) continue;
+                        else if(arr[py][px]==2){
+//                    System.out.println("다음에 소용돌이 만남" + py + ", "+ px+", "+(t+1)+"초");
+                            if((t)%3==0){
+                                visit[y][x] = true;
+                                queue.add(new int[]{y, x, t+1});
+                            }
+                            else if((t)%3==1){
+                                visit[y][x] = true;
+                                queue.add(new int[]{y, x, t+1});
+                            }
+                            else if((t)%3==2){
+                                visit[py][px] = true;
+                                queue.add(new int[]{py, px, t+1});
+                            }
+                        }
+                        else {
+                            visit[py][px] = true;
+                            queue.add(new int[]{py, px, t+1});
+                        }
+                    }
+
+
+                }
+            }
+
+
+
+
+            int ans = time;
+            if(time == N*N) ans = -1;
+
+            System.out.println("#"+test_case+" "+ans);
+
+
+
+        }
+
+
+    }
 }
-			
