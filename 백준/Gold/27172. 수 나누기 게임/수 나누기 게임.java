@@ -36,11 +36,7 @@ public class Main {
 			if(board[rArr[i]])
 			sb.append(result[rArr[i]]).append(" ");
 		}
-
-		System.out.println(sb);
-		
-		
-		
+		System.out.println(sb);	
 	}
 
 }
