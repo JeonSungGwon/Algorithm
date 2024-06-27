@@ -1,25 +1,31 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class Main {
     static int n,m,l,k;
-    static int[][] star;
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        n = sc.nextInt();
-        m = sc.nextInt();
-        l = sc.nextInt();
-        k = sc.nextInt();
+    static ArrayList<int[]> star = new ArrayList<int[]>();
+    public static void main(String[] args) throws IOException {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	StringTokenizer st = new StringTokenizer(br.readLine());
+    	n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        l = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
         int cnt;
         int answer = 0;
-        star = new int[k][2];
         for (int i = 0; i < k; i++) {
-            star[i][0] = sc.nextInt();
-            star[i][1] = sc.nextInt();
+        	st = new StringTokenizer(br.readLine()); 
+            int x = Integer.parseInt(st.nextToken());
+            int y = Integer.parseInt(st.nextToken());
+            star.add(new int[] {x,y});
         }
         for (int i = 0; i < k; i++) {
             for (int j = 0; j < k; j++) {
-                int x = star[i][0];
-                int y = star[j][1];
+                int x = star.get(i)[0];
+                int y = star.get(j)[1];
                 cnt = 0;
                 for (int[] dot : star) {
                     if (x <= dot[0] && x + l >= dot[0] && y <= dot[1] && y + l >= dot[1])
