@@ -2,13 +2,13 @@ import java.util.*;
 
 class Solution {
     
-    static int[] dx = {0, 1, 0, -1}; // 오른쪽, 아래, 왼쪽, 위
+    static int[] dx = {0, 1, 0, -1}; 
     static int[] dy = {1, 0, -1, 0};
     static int n;
     
     public int solution(int[][] board) {
         n = board.length;
-        int[][][] cost = new int[n][n][4]; // 각 위치와 방향별 비용을 저장하는 3차원 배열
+        int[][][] cost = new int[n][n][4]; 
         
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
