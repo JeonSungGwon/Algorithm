@@ -17,7 +17,7 @@ class Solution {
         boolean[][][] visited = new boolean[n + 1][m + 1][k + 1];
         
         // BFS 탐색을 위한 우선순위 큐 (사전순 경로 탐색을 위해 경로를 먼저 비교)
-        PriorityQueue<Node> pq = new PriorityQueue<>(Comparator.comparing(o -> o.path));
+        Queue<Node> pq = new PriorityQueue<>(Comparator.comparing(o -> o.path));
         pq.offer(new Node(x, y, 0, ""));
         visited[x][y][0] = true;
 
