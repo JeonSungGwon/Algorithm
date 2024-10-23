@@ -1,11 +1,11 @@
 import java.util.*;
 
 class Solution {
-    static int pc = 0; // 곡괭이 개수
-    static int[] picksCount; // 곡괭이의 사용 가능한 개수
+    static int pc = 0; 
+    static int[] picksCount;
     static String[] pickArr = {"diamond", "iron", "stone"};
-    static String[] mineralsG; // 주어진 광물 배열
-    static int answer = Integer.MAX_VALUE; // 최소 피로도
+    static String[] mineralsG;
+    static int answer = Integer.MAX_VALUE; 
     
     public int solution(int[] picks, String[] minerals) {
         mineralsG = minerals;
